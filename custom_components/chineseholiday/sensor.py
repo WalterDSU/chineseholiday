@@ -522,7 +522,7 @@ class ChineseHolidaySensor(Entity):
             self.localizedAttributes['纪念日'] = custom
 
         #这里传的数字 控制 显示几个 自定义的纪念日
-        results = self.calculate_anniversary(3)
+        results = self.calculate_anniversary(4)
         _LOGGER.info(f'anniversaries: ${results}')
 
         self.attributes['next_anniversaries'] = []
