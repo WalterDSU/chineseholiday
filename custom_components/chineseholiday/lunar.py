@@ -456,9 +456,9 @@ class CalendarToday:
     # 传进来的是阴历，要转换成周岁
     @classmethod
     def get_age_by_birth_lunar_to_solar(cls,year,month,day):
-        res = CalendarToday.lunar_to_solar(year,month,day)
-        return cls.get_age_by_birth_solar(res.year, res.month, res.day)
-
+        #res = CalendarToday.lunar_to_solar(year,month,day)
+        #return cls.get_age_by_birth_solar(res.year, res.month, res.day)
+        return lunar_year - year - 1     # 农历生日的周岁
     #date '20000101' 虚岁 阴历
     @classmethod
     def get_age_by_birth_lunar(cls,year,month,day):
