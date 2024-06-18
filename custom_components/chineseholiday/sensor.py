@@ -349,8 +349,18 @@ class ChineseHolidaySensor(Entity):
                 day = int(key[2:])
                 age = -1
 
-            solar_date = lunar.CalendarToday.lunar_to_solar(self._lunar.solar()[0],month,day)#下标和位置
+            #solar_date = lunar.CalendarToday.lunar_to_solar(self._lunar.solar()[0],month,day)#下标和位置
+            y = self._lunar.lunar()[0]
+            if month < self._lunar.lunar()[1]:
+                y += 1
+            elif month == self._lunar.lunar()[1]:
+                if day < self._lunar.lunar()[2]:
+                    y += 1
+
+            solar_date = lunar.CalendarToday.lunar_to_solar(y,month,day)#下标和位置
+             
             date_str = solar_date.strftime('%Y%m%d')
+            self._lunar = lunar.CalendarToday()
             try:
                 l = anniversaries[date_str]
             except Exception as e:
@@ -507,6 +517,8 @@ class ChineseHolidaySensor(Entity):
         self.localizedAttributes['星期'] = self._lunar.week_description()
         self.attributes['lunar'] = self._lunar.lunar_date_description()
         self.localizedAttributes['农历'] = self._lunar.lunar_date_description()
+        self.attributes['week_number']   = self._lunar.solar_week_number()
+        self.localizedAttributes['周数'] = self._lunar.solar_week_number_description()
         term = self._lunar.solar_Term()
         if term:
             self.attributes['term'] = term
@@ -522,7 +534,7 @@ class ChineseHolidaySensor(Entity):
             self.localizedAttributes['纪念日'] = custom
 
         #这里传的数字 控制 显示几个 自定义的纪念日
-        results = self.calculate_anniversary(4)
+        results = self.calculate_anniversary(5)
         _LOGGER.info(f'anniversaries: ${results}')
 
         self.attributes['next_anniversaries'] = []
