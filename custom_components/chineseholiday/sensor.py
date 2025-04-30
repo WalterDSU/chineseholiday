@@ -568,7 +568,7 @@ class ChineseHolidaySensor(Entity):
             self.localizedAttributes['最近的节日还有'] = str(nearest['day']) + '天'
         self.calculate_age()
 
-        info = self._holiday.nearest_holiday_info(12,45)
+        info = self._holiday.nearest_holiday_info(1,45) #节假日放假详情的显示时间范围
         if info:
             self.attributes['holiday_info'] = info
             self.localizedAttributes['节假日放假详情'] = info
